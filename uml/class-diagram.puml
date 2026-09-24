@@ -1,0 +1,66 @@
+@startuml class-diagram
+title Adapter Pattern: Plugging Devices into Power Outlets
+
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam defaultFontName Arial
+skinparam roundCorner 0
+skinparam ArrowColor #333333
+skinparam class {
+  BorderColor #333333
+}
+skinparam interface {
+  BorderColor #333333
+}
+skinparam nodesep 45
+skinparam ranksep 70
+
+class Main <<Client>> #F2F2F2 {
+  + {static} main(args : String[]) : void
+}
+
+interface PowerOutlet <<Target>> #DCEBFA {
+  + plugIn() : void
+}
+
+class LaptopAdapter <<Adapter>> #DFF2DF {
+  - laptop : Laptop
+  + LaptopAdapter(laptop : Laptop)
+  + plugIn() : void
+}
+
+class RefrigeratorAdapter <<Adapter>> #DFF2DF {
+  - refrigerator : Refrigerator
+  + RefrigeratorAdapter(refrigerator : Refrigerator)
+  + plugIn() : void
+}
+
+class SmartphoneAdapter <<Adapter>> #DFF2DF {
+  - smartphoneCharger : SmartphoneCharger
+  + SmartphoneAdapter(smartphoneCharger : SmartphoneCharger)
+  + plugIn() : void
+}
+
+class Laptop <<Adaptee>> #FDEBD0 {
+  + charge() : void
+}
+
+class Refrigerator <<Adaptee>> #FDEBD0 {
+  + startCooling() : void
+}
+
+class SmartphoneCharger <<Adaptee>> #FDEBD0 {
+  + chargePhone() : void
+}
+
+Main ..> PowerOutlet : uses
+
+PowerOutlet <|.. LaptopAdapter
+PowerOutlet <|.. RefrigeratorAdapter
+PowerOutlet <|.. SmartphoneAdapter
+
+LaptopAdapter --> Laptop : adaptee
+RefrigeratorAdapter --> Refrigerator : adaptee
+SmartphoneAdapter --> SmartphoneCharger : adaptee
+
+@enduml
